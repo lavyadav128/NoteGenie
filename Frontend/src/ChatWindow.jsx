@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
+import server from "./environment"; // Adjust the import path as needed
 
 function ChatWindow() {
   const [prompt, setPrompt] = useState("");
@@ -33,7 +34,7 @@ function ChatWindow() {
     formData.append("prompt", prompt);
 
     try {
-      const res = await fetch("http://localhost:5000/api/summarize", {
+      const res = await fetch(`${server}/api/summarize`, {
         method: "POST",
         body: formData,
       });
@@ -55,7 +56,7 @@ function ChatWindow() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/share", {
+      const res = await fetch(`${server}/api/share`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ summary, recipients: recipients.split(",") }),
